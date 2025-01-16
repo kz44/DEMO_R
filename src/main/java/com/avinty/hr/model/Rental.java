@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "rentals")
 public class Rental {
 
   @Id
@@ -14,7 +16,7 @@ public class Rental {
   @JoinColumn(name = "car_id", nullable = false)
   private Car car;
 
-  @ManyToOne  
+  @ManyToOne
   @JoinColumn(name = "renter_id", nullable = false)
   private Renter renter;
 
