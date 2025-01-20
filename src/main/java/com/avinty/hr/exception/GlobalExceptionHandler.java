@@ -9,8 +9,8 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-  @ExceptionHandler(CarNotFoundException.class)
-  public ResponseEntity<String> handleCarNotFoundException(CarNotFoundException ex, WebRequest request) {
+  @ExceptionHandler(EntityNotFoundException.class)
+  public ResponseEntity<String> handleCarNotFoundException(EntityNotFoundException ex, WebRequest request) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
   }
 }
