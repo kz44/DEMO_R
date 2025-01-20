@@ -29,7 +29,6 @@ public interface CarRepository extends JpaRepository<Car, Long> {
   List<Car> findByLicensePlateContainingIgnoreCase(String licensePlate);
 
 
-
   /**
    * Checks if a car with the given license plate exists, case-insensitive.
    *

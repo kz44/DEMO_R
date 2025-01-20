@@ -62,7 +62,7 @@ public class CarController {
   /**
    * Updates an existing car by ID.
    *
-   * @param id the ID of the car to update.
+   * @param id  the ID of the car to update.
    * @param dto the new car details.
    * @return {@link CarDTO} representing the updated car.
    */

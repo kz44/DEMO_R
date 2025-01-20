@@ -1,11 +1,18 @@
 package com.avinty.hr.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "rentals")
+
 public class Rental {
 
   @Id

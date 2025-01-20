@@ -103,7 +103,7 @@ public class CarServiceImp implements CarService {
   /**
    * Modifies an existing car's details.
    *
-   * @param id the ID of the car to modify.
+   * @param id  the ID of the car to modify.
    * @param dto the new car details.
    * @return {@link CarDTO} representing the modified car.
    */
