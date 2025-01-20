@@ -1,6 +1,7 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.DTO.UserDTO;
+import com.avinty.hr.exception.CarNotFoundException;
 import com.avinty.hr.mapper.UserMapper;
 import com.avinty.hr.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,5 +23,11 @@ public class UserServiceImp implements UserService {
         .stream()
         .map(userMapper::toDTO)
         .collect(Collectors.toList());
+  }
+
+  public UserDTO getUserById(final Long id) {
+    return userRepository.findById(id)
+        .map(userMapper::toDTO)
+        .orElseThrow(() -> new CarNotFoundException("User doesn't exist with the given id"));
   }
 }
