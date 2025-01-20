@@ -56,5 +56,20 @@ public class UserServiceImp implements UserService {
 
     return userMapper.toDTO(user);
   }
+
+
+  @Override
+  public UserDTO modifyUser(final Long id, final UserDTO dto) {
+    User oldUser = userMapper.toEntity(getUserById(id));
+
+    oldUser.setId(dto.getId());
+    oldUser.setName(dto.getName());
+    oldUser.setPhoneNumber(dto.getPhoneNumber());
+    oldUser.setEmail(dto.getEmail());
+
+    userRepository.save(oldUser);
+
+    return userMapper.toDTO(oldUser);
+  }
 }
 

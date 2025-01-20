@@ -1,5 +1,6 @@
 package com.avinty.hr.controller;
 
+import com.avinty.hr.DTO.CarDTO;
 import com.avinty.hr.DTO.UserDTO;
 import com.avinty.hr.service.UserService;
 import jakarta.validation.Valid;
@@ -35,5 +36,12 @@ public class UserController {
   @PostMapping()
   public ResponseEntity<UserDTO> addNewUser(@Valid @RequestBody UserDTO newUser) {
     return ResponseEntity.ok(userService.addNewUser(newUser));
+  }
+
+
+  @PutMapping("/{id}")
+  public ResponseEntity<UserDTO> updateUserById(@PathVariable final Long id,
+                                              @Valid @RequestBody UserDTO dto) {
+    return ResponseEntity.ok(userService.modifyUser(id, dto));
   }
 }
