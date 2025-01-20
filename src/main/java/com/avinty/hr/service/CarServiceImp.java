@@ -32,4 +32,19 @@ public class CarServiceImp implements CarService {
         .orElseThrow(() -> new CarNotFoundException("Car doesn't exist with the given id"));
   }
 
+  @Override
+  public List<CarDTO> getCarByLicensePlate(String licensePlate) {
+
+    List<CarDTO> cars = carRepository.findByLicensePlateContainingIgnoreCase(licensePlate)
+        .stream()
+        .map(carMapper::toDTO)
+        .toList();
+
+    if (cars.isEmpty()) {
+      throw new CarNotFoundException("There is no car with the given license plate.");
+    }
+
+    return cars;
+  }
+
 }

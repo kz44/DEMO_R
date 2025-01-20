@@ -10,5 +10,6 @@ public interface CarService {
 
   CarDTO getCarById(final Long id);
 
+  List<CarDTO> getCarByLicensePlate(final String licensePlate);
 
 }

@@ -4,10 +4,7 @@ import com.avinty.hr.DTO.CarDTO;
 import com.avinty.hr.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +25,9 @@ public class CarController {
     return ResponseEntity.ok(carService.getCarById(id));
   }
 
+  @GetMapping("/licensePlate")
+  public ResponseEntity<List<CarDTO>> getCarsByLicensePlate(@RequestParam final String licensePlate) {
+    return ResponseEntity.ok(carService.getCarByLicensePlate(licensePlate));
+  }
 
 }
