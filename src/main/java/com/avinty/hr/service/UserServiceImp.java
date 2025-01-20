@@ -1,7 +1,7 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.DTO.UserDTO;
-import com.avinty.hr.exception.CarNotFoundException;
+import com.avinty.hr.exception.EntityNotFoundException;
 import com.avinty.hr.mapper.UserMapper;
 import com.avinty.hr.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +28,21 @@ public class UserServiceImp implements UserService {
   public UserDTO getUserById(final Long id) {
     return userRepository.findById(id)
         .map(userMapper::toDTO)
-        .orElseThrow(() -> new CarNotFoundException("User doesn't exist with the given id"));
+        .orElseThrow(() -> new EntityNotFoundException("User doesn't exist with the given id"));
+  }
+
+
+  @Override
+  public List<UserDTO> getUserByName(String name) {
+    List<UserDTO> users = userRepository.findByUserContainingIgnoreCase(name)
+        .stream()
+        .map(userMapper::toDTO)
+        .toList();
+
+    if (users.isEmpty()) {
+      throw new EntityNotFoundException("There is no User with the given name.");
+    }
+
+    return users;
   }
 }
