@@ -71,5 +71,12 @@ public class UserServiceImp implements UserService {
 
     return userMapper.toDTO(oldUser);
   }
+
+
+  @Override
+  public void deleteUserById(Long id) {
+    getUserById(id);
+    userRepository.deleteById(id);
+  }
 }
 
