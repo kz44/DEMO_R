@@ -66,4 +66,19 @@ public class CarServiceImp implements CarService {
       // return carMapper.toDTO(carRepository.save(carMapper.toEntity(dto)));
     }
   }
+
+  @Override
+  public CarDTO modifyCar(final Long id, final CarDTO dto) {
+    Car oldCar = carMapper.toEntity(getCarById(id));
+
+    oldCar.setBrand(dto.getBrand());
+    oldCar.setLicensePlate(dto.getLicensePlate());
+    oldCar.setColor(dto.getColor());
+    oldCar.setCategory(dto.getCategory());
+
+    carRepository.save(oldCar);
+
+    return carMapper.toDTO(oldCar);
+  }
+
 }

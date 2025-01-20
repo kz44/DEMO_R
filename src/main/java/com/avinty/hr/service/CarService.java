@@ -16,4 +16,6 @@ public interface CarService {
 
   CarDTO addNewCar(CarDTO dto);
 
+  CarDTO modifyCar(final Long id, CarDTO dto);
+
 }
