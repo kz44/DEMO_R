@@ -2,6 +2,7 @@ package com.avinty.hr.controller;
 
 import com.avinty.hr.DTO.CarDTO;
 import com.avinty.hr.service.CarService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,11 @@ public class CarController {
   @GetMapping("/licensePlate")
   public ResponseEntity<List<CarDTO>> getCarsByLicensePlate(@RequestParam final String licensePlate) {
     return ResponseEntity.ok(carService.getCarByLicensePlate(licensePlate));
+  }
+
+  @PostMapping()
+  public ResponseEntity<CarDTO> addNewCar(@Valid @RequestBody CarDTO newCar) {
+    return ResponseEntity.ok(carService.addNewCar(newCar));
   }
 
 }

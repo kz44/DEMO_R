@@ -12,4 +12,8 @@ public interface CarService {
 
   List<CarDTO> getCarByLicensePlate(final String licensePlate);
 
+  boolean existCarByLicensePlate(final String licensePlate);
+
+  CarDTO addNewCar(CarDTO dto);
+
 }

@@ -3,6 +3,7 @@ package com.avinty.hr.service;
 import com.avinty.hr.DTO.CarDTO;
 import com.avinty.hr.exception.CarNotFoundException;
 import com.avinty.hr.mapper.CarMapper;
+import com.avinty.hr.model.Car;
 import com.avinty.hr.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,4 +48,22 @@ public class CarServiceImp implements CarService {
     return cars;
   }
 
+
+  @Override
+  public boolean existCarByLicensePlate(final String licensePlate) {
+    return carRepository.existsCarByLicensePlateIgnoreCase(licensePlate);
+  }
+
+  @Override
+  public CarDTO addNewCar(CarDTO dto) {
+
+    if (existCarByLicensePlate(dto.getLicensePlate())) {
+      throw new IllegalArgumentException("Car with the given license plate already exist");
+    } else {
+      Car car = carMapper.toEntity(dto);
+      car = carRepository.save(car);
+      return carMapper.toDTO(car);
+      // return carMapper.toDTO(carRepository.save(carMapper.toEntity(dto)));
+    }
+  }
 }
