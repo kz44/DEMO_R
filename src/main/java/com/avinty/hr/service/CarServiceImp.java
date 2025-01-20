@@ -1,6 +1,7 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.DTO.CarDTO;
+import com.avinty.hr.exception.CarNotFoundException;
 import com.avinty.hr.mapper.CarMapper;
 import com.avinty.hr.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,4 +24,12 @@ public class CarServiceImp implements CarService {
         .map(carMapper::toDTO)
         .collect(Collectors.toList());
   }
+
+
+  public CarDTO getCarById(final Long id) {
+    return carRepository.findById(id)
+        .map(carMapper::toDTO)
+        .orElseThrow(() -> new CarNotFoundException("Car doesn't exist with the given id"));
+  }
+
 }
