@@ -3,6 +3,7 @@ package com.avinty.hr.service;
 import com.avinty.hr.DTO.UserDTO;
 import com.avinty.hr.exception.EntityNotFoundException;
 import com.avinty.hr.mapper.UserMapper;
+import com.avinty.hr.model.User;
 import com.avinty.hr.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -45,4 +46,15 @@ public class UserServiceImp implements UserService {
 
     return users;
   }
+
+
+  @Override
+  public UserDTO addNewUser(UserDTO dto) {
+
+    User user = userMapper.toEntity(dto);
+    userRepository.save(user);
+
+    return userMapper.toDTO(user);
+  }
 }
+

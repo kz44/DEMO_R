@@ -1,6 +1,5 @@
 package com.avinty.hr.repository;
 
-import com.avinty.hr.model.Car;
 import com.avinty.hr.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

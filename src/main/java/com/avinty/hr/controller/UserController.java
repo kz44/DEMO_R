@@ -1,8 +1,8 @@
 package com.avinty.hr.controller;
 
-import com.avinty.hr.DTO.CarDTO;
 import com.avinty.hr.DTO.UserDTO;
 import com.avinty.hr.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,5 +30,10 @@ public class UserController {
   @GetMapping("/name")
   public ResponseEntity<List<UserDTO>> getCarsByLicensePlate(@RequestParam final String name) {
     return ResponseEntity.ok(userService.getUserByName(name));
+  }
+
+  @PostMapping()
+  public ResponseEntity<UserDTO> addNewUser(@Valid @RequestBody UserDTO newUser) {
+    return ResponseEntity.ok(userService.addNewUser(newUser));
   }
 }
