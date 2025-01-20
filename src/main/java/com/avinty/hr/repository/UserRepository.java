@@ -8,6 +8,12 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
+  /**
+   * Finds users whose name contains the given string, case-insensitive, ordered by brand in ascending order.
+   *
+   * @param name the part of the name to search for.
+   * @return a list of matching users.
+   */
   @Query("SELECT u FROM User u " +
       "WHERE LOWER(u.name) LIKE LOWER(CONCAT('%', :name, '%')) " +
       "ORDER BY u.name ASC")

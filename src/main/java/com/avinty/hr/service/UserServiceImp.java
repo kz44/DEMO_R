@@ -18,6 +18,11 @@ public class UserServiceImp implements UserService {
   private final UserRepository userRepository;
   private final UserMapper userMapper;
 
+  /**
+   * Retrieves all users, sorted by brand in ascending order.
+   *
+   * @return List of {@link UserDTO} representing all users.
+   */
   @Override
   public List<UserDTO> getAllUsers() {
     return userRepository.findAll()
@@ -26,6 +31,13 @@ public class UserServiceImp implements UserService {
         .collect(Collectors.toList());
   }
 
+  /**
+   * Retrieves a user by its ID.
+   *
+   * @param id the ID of the user to retrieve.
+   * @return {@link UserDTO} representing the user.
+   * @throws EntityNotFoundException if the user with the given ID is not found.
+   */
   public UserDTO getUserById(final Long id) {
     return userRepository.findById(id)
         .map(userMapper::toDTO)
@@ -33,6 +45,13 @@ public class UserServiceImp implements UserService {
   }
 
 
+  /**
+   * Retrieves a list of users by their name.
+   *
+   * @param name the name to search for.
+   * @return List of {@link UserDTO} representing users matching the name.
+   * @throws EntityNotFoundException if no users are found with the given name.
+   */
   @Override
   public List<UserDTO> getUserByName(String name) {
     List<UserDTO> users = userRepository.findByUserContainingIgnoreCase(name)
@@ -48,6 +67,13 @@ public class UserServiceImp implements UserService {
   }
 
 
+  /**
+   * Adds a new User to the repository.
+   *
+   * @param dto the user information to add.
+   * @return {@link UserDTO} representing the added user.
+   */
+
   @Override
   public UserDTO addNewUser(UserDTO dto) {
 
@@ -58,6 +84,13 @@ public class UserServiceImp implements UserService {
   }
 
 
+  /**
+   * Modifies an existing user's details.
+   *
+   * @param id  the ID of the user to modify.
+   * @param dto the new user details.
+   * @return {@link UserDTO} representing the modified user.
+   */
   @Override
   public UserDTO modifyUser(final Long id, final UserDTO dto) {
     User oldUser = userMapper.toEntity(getUserById(id));
@@ -73,6 +106,11 @@ public class UserServiceImp implements UserService {
   }
 
 
+  /**
+   * Deletes an user by ID.
+   *
+   * @param id the ID of the user to delete.
+   */
   @Override
   public void deleteUserById(Long id) {
     getUserById(id);

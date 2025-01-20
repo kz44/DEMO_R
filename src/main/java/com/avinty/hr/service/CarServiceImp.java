@@ -123,7 +123,7 @@ public class CarServiceImp implements CarService {
 
 
   /**
-   * Deletes a car by its ID.
+   * Deletes a car by ID.
    *
    * @param id the ID of the car to delete.
    */
