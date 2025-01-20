@@ -81,4 +81,9 @@ public class CarServiceImp implements CarService {
     return carMapper.toDTO(oldCar);
   }
 
+  @Override
+  public void deleteCarById(Long id) {
+    getCarById(id);
+    carRepository.deleteById(id);
+  }
 }

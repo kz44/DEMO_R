@@ -18,4 +18,5 @@ public interface CarService {
 
   CarDTO modifyCar(final Long id, CarDTO dto);
 
+  void deleteCarById(final Long id);
 }
