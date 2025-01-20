@@ -15,4 +15,6 @@ public interface CarRepository extends JpaRepository<Car, Long> {
       "WHERE LOWER(c.licensePlate) LIKE LOWER(CONCAT('%', :licensePlate, '%')) " +
       "ORDER BY c.brand ASC")
   List<Car> findByLicensePlateContainingIgnoreCase(String licensePlate);
+
+  boolean existsCarByLicensePlateIgnoreCase(String licensePlate);
 }
