@@ -1,13 +1,11 @@
 package com.avinty.hr.controller;
 
+import com.avinty.hr.DTO.CarDTO;
 import com.avinty.hr.DTO.UserDTO;
 import com.avinty.hr.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +25,10 @@ public class UserController {
   @GetMapping("/{id}")
   public ResponseEntity<UserDTO> getCarById(@PathVariable final Long id) {
     return ResponseEntity.ok(userService.getUserById(id));
+  }
+
+  @GetMapping("/name")
+  public ResponseEntity<List<UserDTO>> getCarsByLicensePlate(@RequestParam final String name) {
+    return ResponseEntity.ok(userService.getUserByName(name));
   }
 }
