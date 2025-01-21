@@ -5,10 +5,7 @@ import com.avinty.hr.DTO.RentalDTO;
 import com.avinty.hr.service.RentalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,14 +23,20 @@ public class LeasesController {
   }
 
 
- @GetMapping("/current/{userId}")
-  public ResponseEntity<RentalDTO> getRentalDetailsByUserId(@PathVariable final Long userId){
+  @GetMapping("/current/{userId}")
+  public ResponseEntity<RentalDTO> getRentalDetailsByUserId(@PathVariable final Long userId) {
     return ResponseEntity.ok(rentalService.getRentalByUserId(userId));
- }
+  }
 
 
- @GetMapping("/{userId}")
- public ResponseEntity<List<RentalDTO>> getRentalsDetailsByUserId(@PathVariable final Long userId){
+  @GetMapping("/{userId}")
+  public ResponseEntity<List<RentalDTO>> getRentalsDetailsByUserId(@PathVariable final Long userId) {
     return ResponseEntity.ok(rentalService.getRentalsByUserId(userId));
- }
+  }
+
+
+  @PostMapping()
+  public ResponseEntity<RentalDTO> addNewRental(@RequestBody RentalDTO rentalDTO) {
+    return ResponseEntity.ok(rentalService.addNewRental(rentalDTO));
+  }
 }

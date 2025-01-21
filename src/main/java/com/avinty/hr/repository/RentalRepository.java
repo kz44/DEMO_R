@@ -19,4 +19,7 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
 
   @Query("SELECT r FROM Rental r WHERE r.user.id = :userId ORDER BY r.endDate ASC")
   List<Rental> findAllRentalByUserId(@Param("userId") Long userId);
+
+
+
 }
