@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/API/V1/leases")
@@ -23,8 +25,15 @@ public class LeasesController {
     return ResponseEntity.ok(rentalService.getTotalRentals());
   }
 
+
  @GetMapping("/current/{userId}")
   public ResponseEntity<RentalDTO> getRentalDetailsByUserId(@PathVariable final Long userId){
-    return ResponseEntity.ok(rentalService.getRentalDetailsByUserId(userId));
+    return ResponseEntity.ok(rentalService.getRentalByUserId(userId));
+ }
+
+
+ @GetMapping("/{userId}")
+ public ResponseEntity<List<RentalDTO>> getRentalsDetailsByUserId(@PathVariable final Long userId){
+    return ResponseEntity.ok(rentalService.getRentalsByUserId(userId));
  }
 }
