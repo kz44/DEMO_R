@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserMapper {
 
-  public UserDTO toDTO(User user) {
+  public UserDTO toDTO(User entity) {
     return UserDTO.builder()
-        .id(user.getId())
-        .name(user.getName())
-        .phoneNumber(user.getPhoneNumber())
-        .email(user.getEmail())
+        .id(entity.getId())
+        .name(entity.getName())
+        .phoneNumber(entity.getPhoneNumber())
+        .email(entity.getEmail())
         .build();
   }
 
