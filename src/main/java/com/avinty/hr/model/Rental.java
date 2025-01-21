@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "rentals")
-
 public class Rental {
 
   @Id
@@ -24,8 +23,8 @@ public class Rental {
   private Car car;
 
   @ManyToOne
-  @JoinColumn(name = "renter_id", nullable = false)
-  private Renter renter;
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
   private String pickUpLocation;
 
