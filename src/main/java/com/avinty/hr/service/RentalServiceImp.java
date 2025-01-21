@@ -9,4 +9,9 @@ import org.springframework.stereotype.Service;
 public class RentalServiceImp implements RentalService{
 
   private final RentalRepository rentalRepository;
+
+  @Override
+  public Long getTotalRentals() {
+    return rentalRepository.count();
+  }
 }
