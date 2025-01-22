@@ -9,6 +9,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserMapper {
 
+  /**
+   * Converts a {@link User} entity to a {@link UserDTO}.
+   *
+   * @param entity the {@link User} entity to convert.
+   * @return the corresponding {@link UserDTO}.
+   */
   public UserDTO toDTO(User entity) {
     return UserDTO.builder()
         .id(entity.getId())
@@ -19,6 +25,12 @@ public class UserMapper {
   }
 
 
+  /**
+   * Converts a {@link UserDTO} to a {@link User} entity.
+   *
+   * @param dto the {@link UserDTO} to convert.
+   * @return the corresponding {@link User} entity.
+   */
   public User toEntity(UserDTO dto) {
     return User.builder()
         .id(dto.getId())

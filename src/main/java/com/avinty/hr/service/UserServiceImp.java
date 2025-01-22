@@ -32,7 +32,7 @@ public class UserServiceImp implements UserService {
   }
 
   /**
-   * Retrieves a user by its ID.
+   * Retrieves a user by ID.
    *
    * @param id the ID of the user to retrieve.
    * @return {@link UserDTO} representing the user.
@@ -107,7 +107,7 @@ public class UserServiceImp implements UserService {
 
 
   /**
-   * Deletes an user by ID.
+   * Deletes user by ID.
    *
    * @param id the ID of the user to delete.
    */

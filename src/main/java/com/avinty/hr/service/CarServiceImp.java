@@ -32,7 +32,7 @@ public class CarServiceImp implements CarService {
   }
 
   /**
-   * Retrieves a car by its ID.
+   * Retrieves a car by ID.
    *
    * @param id the ID of the car to retrieve.
    * @return {@link CarDTO} representing the car.
@@ -84,7 +84,7 @@ public class CarServiceImp implements CarService {
    *
    * @param dto the car information to add.
    * @return {@link CarDTO} representing the added car.
-   * @throws IllegalArgumentException if a car with the same license plate already exists.
+   * @throws EntityNotFoundException if a car with the same license plate already exists.
    */
   @Override
   public CarDTO addNewCar(CarDTO dto) {
