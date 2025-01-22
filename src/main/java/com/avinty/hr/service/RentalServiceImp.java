@@ -27,11 +27,24 @@ public class RentalServiceImp implements RentalService {
   private final CarMapper carMapper;
   private final UserMapper userMapper;
 
+  /**
+   * Retrieves the total number of rentals in the system.
+   *
+   * @return the total number of rentals.
+   */
   @Override
   public Long getTotalRentals() {
     return rentalRepository.count();
   }
 
+
+  /**
+   * Retrieves the current rental for a user (if any) where the rental end date is after the current date.
+   *
+   * @param userId the ID of the user.
+   * @return a {@link RentalDTO} representing the user's current rental.
+   * @throws EntityNotFoundException if no current rental is found for the user.
+   */
   @Override
   public RentalDTO getRentalByUserId(Long userId) {
     return rentalRepository.findByUserIdAndEndDateAfter(userId, LocalDateTime.now())
@@ -39,10 +52,25 @@ public class RentalServiceImp implements RentalService {
         .orElseThrow(() -> new EntityNotFoundException("No current rental found for user " + userId));
   }
 
+
+  /**
+   * Checks whether a rental exists by the given user ID.
+   *
+   * @param userId the ID of the user.
+   * @return true if a rental exists for the user, false otherwise.
+   */
   boolean existRentalById(final Long userId) {
     return rentalRepository.existsById(userId);
   }
 
+
+  /**
+   * Retrieves all rentals for a specific user.
+   *
+   * @param userId the ID of the user.
+   * @return a list of {@link RentalDTO} representing the user's rentals.
+   * @throws EntityNotFoundException if no rentals are found for the user.
+   */
   @Override
   public List<RentalDTO> getRentalsByUserId(Long userId) {
 
@@ -56,6 +84,13 @@ public class RentalServiceImp implements RentalService {
         .collect(Collectors.toList());
   }
 
+
+  /**
+   * Adds a new rental record to the system.
+   *
+   * @param rentalDTO the {@link RentalDTO} containing the rental details.
+   * @return the newly created {@link RentalDTO}.
+   */
   @Override
   public RentalDTO addNewRental(RentalDTO rentalDTO) {
 

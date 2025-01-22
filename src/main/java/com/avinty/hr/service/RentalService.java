@@ -12,5 +12,5 @@ public interface RentalService {
 
   List<RentalDTO> getRentalsByUserId(final Long userId);
 
-  RentalDTO addNewRental (RentalDTO rentalDTO);
+  RentalDTO addNewRental(RentalDTO rentalDTO);
 }
