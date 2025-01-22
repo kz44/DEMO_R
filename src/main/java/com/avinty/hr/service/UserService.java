@@ -11,6 +11,7 @@ public interface UserService {
 
   List<UserDTO> getUserByName(final String name);
 
+  boolean existUserByPhoneNumber(final String phoneNumber);
   UserDTO addNewUser(UserDTO dto);
 
   UserDTO modifyUser(final Long id, UserDTO dto);

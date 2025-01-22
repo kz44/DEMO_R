@@ -68,6 +68,18 @@ public class UserServiceImp implements UserService {
 
 
   /**
+   * Checks if User exists with the given phone number.
+   *
+   * @param phoneNumber the phone number to check.
+   * @return true if the user exists, false otherwise.
+   */
+  @Override
+  public boolean existUserByPhoneNumber(final String phoneNumber) {
+    return userRepository.existsUserByPhoneNumber(phoneNumber);
+  }
+
+
+  /**
    * Adds a new User to the repository.
    *
    * @param dto the user information to add.
@@ -77,10 +89,13 @@ public class UserServiceImp implements UserService {
   @Override
   public UserDTO addNewUser(UserDTO dto) {
 
-    User user = userMapper.toEntity(dto);
-    userRepository.save(user);
-
-    return userMapper.toDTO(user);
+    if (existUserByPhoneNumber(dto.getPhoneNumber())) {
+      throw new EntityNotFoundException("User with the given phone number already exist");
+    } else {
+      User user = userMapper.toEntity(dto);
+      userRepository.save(user);
+      return userMapper.toDTO(user);
+    }
   }
 
 

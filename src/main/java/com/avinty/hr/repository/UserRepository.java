@@ -18,4 +18,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
       "WHERE LOWER(u.name) LIKE LOWER(CONCAT('%', :name, '%')) " +
       "ORDER BY u.name ASC")
   List<User> findByUserContainingIgnoreCase(String name);
+
+
+  /**
+   * Checks if user with the given phone number exists.
+   *
+   * @param phoneNumber the phone number to check.
+   * @return true if user exists, false otherwise.
+   */
+  boolean existsUserByPhoneNumber(String phoneNumber);
 }
