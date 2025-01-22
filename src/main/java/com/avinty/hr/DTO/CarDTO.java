@@ -3,7 +3,12 @@ package com.avinty.hr.DTO;
 import com.avinty.hr.enums.Category;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -13,16 +18,17 @@ public class CarDTO {
 
   private Long id;
 
-  @NonNull
+  @NotNull(message = "Brand must not be null")
+  @Size(min = 2, max = 50, message = "Brand must be between 2 and 50 characters")
   private String brand;
 
-  @NonNull
+  @NotNull(message = "License plate must not be null")
   private String licensePlate;
 
-  @NonNull
+  @NotNull(message = "Color most not be null")
   private String color;
 
-  @NonNull
+  @NotNull(message = "Category must not be null")
   @Enumerated(EnumType.STRING)
   private Category category;
 

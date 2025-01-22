@@ -90,7 +90,7 @@ public class CarServiceImp implements CarService {
   public CarDTO addNewCar(CarDTO dto) {
 
     if (existCarByLicensePlate(dto.getLicensePlate())) {
-      throw new IllegalArgumentException("Car with the given license plate already exist");
+      throw new EntityNotFoundException("Car with the given license plate already exist");
     } else {
       Car car = carMapper.toEntity(dto);
       car = carRepository.save(car);
