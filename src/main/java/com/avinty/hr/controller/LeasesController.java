@@ -51,8 +51,8 @@ public class LeasesController {
    * @throws EntityNotFoundException if no rentals are found for the user.
    */
   @GetMapping("/{userId}")
-  public ResponseEntity<List<RentalDTO>> getRentalsDetailsByUserId(@PathVariable final Long userId) {
-    return ResponseEntity.ok(rentalService.getRentalsByUserId(userId));
+  public ResponseEntity<List<RentalDTO>> getAllRentalsByUserId(@PathVariable final Long userId) {
+    return ResponseEntity.ok(rentalService.getAllRentalsByUserId(userId));
   }
 
 

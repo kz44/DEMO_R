@@ -10,7 +10,9 @@ public interface RentalService {
 
   RentalDTO getRentalByUserId(final Long userId);
 
-  List<RentalDTO> getRentalsByUserId(final Long userId);
+  boolean existRentalByUserId(final Long userId);
+
+  List<RentalDTO> getAllRentalsByUserId(final Long userId);
 
   RentalDTO addNewRental(RentalDTO rentalDTO);
 }

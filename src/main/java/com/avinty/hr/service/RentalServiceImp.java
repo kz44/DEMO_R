@@ -59,7 +59,8 @@ public class RentalServiceImp implements RentalService {
    * @param userId the ID of the user.
    * @return true if a rental exists for the user, false otherwise.
    */
-  boolean existRentalById(final Long userId) {
+  @Override
+  public boolean existRentalByUserId(final Long userId) {
     return rentalRepository.existsById(userId);
   }
 
@@ -72,16 +73,18 @@ public class RentalServiceImp implements RentalService {
    * @throws EntityNotFoundException if no rentals are found for the user.
    */
   @Override
-  public List<RentalDTO> getRentalsByUserId(Long userId) {
+  public List<RentalDTO> getAllRentalsByUserId(Long userId) {
 
-    if (!existRentalById(userId)) {
-      throw new EntityNotFoundException("No current rental found for user " + userId);
-    }
-
-    return rentalRepository.findAllRentalByUserId(userId)
+    List<RentalDTO> rentals = rentalRepository.findAllRentalByUserId(userId)
         .stream()
         .map(rentalMapper::toDTO)
-        .collect(Collectors.toList());
+        .toList();
+
+    if (rentals.isEmpty()) {
+      throw new EntityNotFoundException("No rentals found for user with the given id " + userId);
+    }
+
+    return rentals;
   }
 
 
