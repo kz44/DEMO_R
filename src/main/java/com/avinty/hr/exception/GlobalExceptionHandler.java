@@ -11,6 +11,8 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(EntityNotFoundException.class)
   public ResponseEntity<String> handleCarNotFoundException(EntityNotFoundException ex, WebRequest request) {
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    return ResponseEntity
+        .status(HttpStatus.NOT_FOUND)
+        .body(ex.getMessage());
   }
 }
