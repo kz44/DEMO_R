@@ -14,7 +14,7 @@ public interface CarRepository extends JpaRepository<Car, Long> {
    * @return List of cars.
    */
   @Query("SELECT c FROM Car c ORDER BY c.brand ASC")
-  List<Car> findALlCarsSortedByBrandASC();
+  List<Car> findAllCarsSortedByBrandASC();
 
 
   /**

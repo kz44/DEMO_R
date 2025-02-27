@@ -33,4 +33,24 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
   List<Rental> findAllRentalByUserId(@Param("userId") Long userId);
 
 
+  /**
+   * Checks if the car is rented within the given date range.
+   * <p>
+   * This method checks if the car is already rented during the specified start and end dates.
+   * It returns true if the rental period overlaps with the given dates.
+   * </p>
+   *
+   * @param carId     the ID of the car to check.
+   * @param startDate the start date of the rental period.
+   * @param endDate   the end date of the rental period.
+   * @return {@code true} if the car is rented during the given period, {@code false} otherwise.
+   */
+
+  @Query("SELECT COUNT(r) > 0 FROM Rental r WHERE r.car.id = :carId AND " +
+      "(:startDate BETWEEN r.startDate AND r.endDate OR " +
+      ":endDate BETWEEN r.startDate AND r.endDate OR " +
+      "r.startDate BETWEEN :startDate AND :endDate)")
+  boolean existsByCarIdAndDateRange(@Param("carId") Long carId,
+                                    @Param("startDate") LocalDateTime startDate,
+                                    @Param("endDate") LocalDateTime endDate);
 }

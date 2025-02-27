@@ -1,7 +1,8 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.DTO.CarDTO;
-import com.avinty.hr.exception.EntityNotFoundException;
+import com.avinty.hr.exception.CarNotFoundException;
+import com.avinty.hr.exception.DuplicateEntityException;
 import com.avinty.hr.mapper.CarMapper;
 import com.avinty.hr.model.Car;
 import com.avinty.hr.repository.CarRepository;
@@ -25,7 +26,7 @@ public class CarServiceImp implements CarService {
    */
   @Override
   public List<CarDTO> getAllCars() {
-    return carRepository.findALlCarsSortedByBrandASC()
+    return carRepository.findAllCarsSortedByBrandASC()
         .stream()
         .map(carMapper::toDTO)
         .collect(Collectors.toList());
@@ -36,12 +37,12 @@ public class CarServiceImp implements CarService {
    *
    * @param id the ID of the car to retrieve.
    * @return {@link CarDTO} representing the car.
-   * @throws EntityNotFoundException if the car with the given ID is not found.
+   * @throws CarNotFoundException if the car with the given ID is not found.
    */
   public CarDTO getCarById(final Long id) {
     return carRepository.findById(id)
         .map(carMapper::toDTO)
-        .orElseThrow(() -> new EntityNotFoundException("Car doesn't exist with the given id"));
+        .orElseThrow(() -> new CarNotFoundException("Car doesn't exist with the given id"));
   }
 
   /**
@@ -49,7 +50,7 @@ public class CarServiceImp implements CarService {
    *
    * @param licensePlate the license plate to search for.
    * @return List of {@link CarDTO} representing cars matching the license plate.
-   * @throws EntityNotFoundException if no cars are found with the given license plate.
+   * @throws CarNotFoundException if no cars are found with the given license plate.
    */
   @Override
   public List<CarDTO> getCarByLicensePlate(String licensePlate) {
@@ -60,7 +61,7 @@ public class CarServiceImp implements CarService {
         .toList();
 
     if (cars.isEmpty()) {
-      throw new EntityNotFoundException("There is no car with the given license plate.");
+      throw new CarNotFoundException("There is no car with the given license plate.");
     }
 
     return cars;
@@ -84,13 +85,13 @@ public class CarServiceImp implements CarService {
    *
    * @param dto the car information to add.
    * @return {@link CarDTO} representing the added car.
-   * @throws EntityNotFoundException if a car with the same license plate already exists.
+   * @throws DuplicateEntityException if a car with the same license plate already exists.
    */
   @Override
   public CarDTO addNewCar(CarDTO dto) {
 
     if (existCarByLicensePlate(dto.getLicensePlate())) {
-      throw new EntityNotFoundException("Car with the given license plate already exist");
+      throw new DuplicateEntityException("Car with the given license plate already exist");
     } else {
       Car car = carMapper.toEntity(dto);
       car = carRepository.save(car);

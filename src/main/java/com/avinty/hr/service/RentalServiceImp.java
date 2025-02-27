@@ -1,7 +1,8 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.DTO.RentalDTO;
-import com.avinty.hr.exception.EntityNotFoundException;
+import com.avinty.hr.exception.DuplicateEntityException;
+import com.avinty.hr.exception.RentalNotFoundException;
 import com.avinty.hr.mapper.CarMapper;
 import com.avinty.hr.mapper.RentalMapper;
 import com.avinty.hr.mapper.UserMapper;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,13 +43,13 @@ public class RentalServiceImp implements RentalService {
    *
    * @param userId the ID of the user.
    * @return a {@link RentalDTO} representing the user's current rental.
-   * @throws EntityNotFoundException if no current rental is found for the user.
+   * @throws RentalNotFoundException if no current rental is found for the user.
    */
   @Override
   public RentalDTO getRentalByUserId(Long userId) {
     return rentalRepository.findByUserIdAndEndDateAfter(userId, LocalDateTime.now())
         .map(rentalMapper::toDTO)
-        .orElseThrow(() -> new EntityNotFoundException("No current rental found for user " + userId));
+        .orElseThrow(() -> new RentalNotFoundException("No current rental found for user " + userId));
   }
 
 
@@ -70,7 +70,7 @@ public class RentalServiceImp implements RentalService {
    *
    * @param userId the ID of the user.
    * @return a list of {@link RentalDTO} representing the user's rentals.
-   * @throws EntityNotFoundException if no rentals are found for the user.
+   * @throws RentalNotFoundException if no rentals are found for the user.
    */
   @Override
   public List<RentalDTO> getAllRentalsByUserId(Long userId) {
@@ -81,7 +81,7 @@ public class RentalServiceImp implements RentalService {
         .toList();
 
     if (rentals.isEmpty()) {
-      throw new EntityNotFoundException("No rentals found for user with the given id " + userId);
+      throw new RentalNotFoundException("No rentals found for user with the given id " + userId);
     }
 
     return rentals;
@@ -99,6 +99,15 @@ public class RentalServiceImp implements RentalService {
 
     Car car = carMapper.toEntity(carService.getCarById(rentalDTO.getCarId()));
     User user = userMapper.toEntity(userService.getUserById(rentalDTO.getRenterId()));
+
+    boolean isCarRented = rentalRepository.existsByCarIdAndDateRange(
+        car.getId(), rentalDTO.getStartDate(), rentalDTO.getEndDate()
+    );
+
+    if (isCarRented) {
+      throw new DuplicateEntityException("This car is already rented in this period");
+
+    }
 
     Rental newRental = Rental.builder()
         .car(car)

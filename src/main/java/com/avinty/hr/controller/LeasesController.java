@@ -2,7 +2,6 @@ package com.avinty.hr.controller;
 
 
 import com.avinty.hr.DTO.RentalDTO;
-import com.avinty.hr.exception.EntityNotFoundException;
 import com.avinty.hr.service.RentalService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

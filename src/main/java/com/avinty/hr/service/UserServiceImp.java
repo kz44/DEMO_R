@@ -1,7 +1,8 @@
 package com.avinty.hr.service;
 
 import com.avinty.hr.DTO.UserDTO;
-import com.avinty.hr.exception.EntityNotFoundException;
+import com.avinty.hr.exception.DuplicateEntityException;
+import com.avinty.hr.exception.UserNotFoundException;
 import com.avinty.hr.mapper.UserMapper;
 import com.avinty.hr.model.User;
 import com.avinty.hr.repository.UserRepository;
@@ -36,12 +37,12 @@ public class UserServiceImp implements UserService {
    *
    * @param id the ID of the user to retrieve.
    * @return {@link UserDTO} representing the user.
-   * @throws EntityNotFoundException if the user with the given ID is not found.
+   * @throws UserNotFoundException if the user with the given ID is not found.
    */
   public UserDTO getUserById(final Long id) {
     return userRepository.findById(id)
         .map(userMapper::toDTO)
-        .orElseThrow(() -> new EntityNotFoundException("User doesn't exist with the given id"));
+        .orElseThrow(() -> new UserNotFoundException("User doesn't exist with the given id"));
   }
 
 
@@ -50,7 +51,7 @@ public class UserServiceImp implements UserService {
    *
    * @param name the name to search for.
    * @return List of {@link UserDTO} representing users matching the name.
-   * @throws EntityNotFoundException if no users are found with the given name.
+   * @throws UserNotFoundException if no users are found with the given name.
    */
   @Override
   public List<UserDTO> getUserByName(String name) {
@@ -60,7 +61,7 @@ public class UserServiceImp implements UserService {
         .toList();
 
     if (users.isEmpty()) {
-      throw new EntityNotFoundException("There is no User with the given name.");
+      throw new UserNotFoundException("There is no User with the given name.");
     }
 
     return users;
@@ -90,7 +91,7 @@ public class UserServiceImp implements UserService {
   public UserDTO addNewUser(UserDTO dto) {
 
     if (existUserByPhoneNumber(dto.getPhoneNumber())) {
-      throw new EntityNotFoundException("User with the given phone number already exist");
+      throw new DuplicateEntityException("User with the given phone number already exist");
     } else {
       User user = userMapper.toEntity(dto);
       userRepository.save(user);
