@@ -4,12 +4,19 @@ import com.avinty.hr.DTO.RentalDTO;
 import com.avinty.hr.model.Car;
 import com.avinty.hr.model.Rental;
 import com.avinty.hr.model.User;
+import com.avinty.hr.service.CarService;
+import com.avinty.hr.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class RentalMapper {
+
+  private final CarService carService;
+  private final UserService userService;
+  private final CarMapper carMapper;
+  private final UserMapper userMapper;
 
   /**
    * Converts a {@link Rental} entity to a {@link RentalDTO}.
@@ -23,23 +30,15 @@ public class RentalMapper {
 
         // Car details
         .carId(entity.getCar().getId())
-        .carBrand(entity.getCar().getBrand())
-        .carLicensePlate(entity.getCar().getLicensePlate())
-        .carColor(entity.getCar().getColor())
-        .carCategory(entity.getCar().getCategory())
 
         // User details (renter)
         .renterId(entity.getUser().getId())
-        .renterName(entity.getUser().getName())
-        .renterPhoneNumber(entity.getUser().getPhoneNumber())
-        .renterEmail(entity.getUser().getEmail())
 
         // Rental details
         .pickUpLocation(entity.getPickUpLocation())
         .dropOffLocation(entity.getDropOffLocation())
         .startDate(entity.getStartDate())
         .endDate(entity.getEndDate())
-
         .build();
   }
 
@@ -53,21 +52,10 @@ public class RentalMapper {
   public Rental toEntity(RentalDTO dto) {
 
     // Car details
-    Car car = Car.builder()
-        .id(dto.getCarId())
-        .brand(dto.getCarBrand())
-        .licensePlate(dto.getCarLicensePlate())
-        .color(dto.getCarColor())
-        .category(dto.getCarCategory())
-        .build();
+    Car car = carMapper.toEntity(carService.getCarById(dto.getCarId()));
 
     // User details (renter)
-    User user = User.builder()
-        .id(dto.getRenterId())
-        .name(dto.getRenterName())
-        .phoneNumber(dto.getRenterPhoneNumber())
-        .email(dto.getRenterEmail())
-        .build();
+    User user = userMapper.toEntity(userService.getUserById(dto.getRenterId()));
 
     // Rental entity
     return Rental.builder()
